@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "243813647884",
+    "firebase_url": "https://smart-gsr-default-rtdb.firebaseio.com",
+    "project_id": "smart-gsr",
+    "storage_bucket": "smart-gsr.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243813647884:android:089c2e971b2ff11164d029",
+        "android_client_info": {
+          "package_name": "com.example.photp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkIvdGExcfxE56trZ_ns-jH9rShQSQ_h4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243813647884:android:85ead6a99c3d45c164d029",
+        "android_client_info": {
+          "package_name": "com.example.sdrc_classes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkIvdGExcfxE56trZ_ns-jH9rShQSQ_h4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243813647884:android:d98a9a2014e556ce64d029",
+        "android_client_info": {
+          "package_name": "smart.gyser.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkIvdGExcfxE56trZ_ns-jH9rShQSQ_h4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

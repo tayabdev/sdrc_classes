@@ -1,11 +1,30 @@
-// lib/ui/views/auth/signup/signup_view.dart
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class SignupView extends StatelessWidget {
-  SignupView({super.key});
+class SignupView extends StatefulWidget {
+  const SignupView({super.key});
+
+  @override
+  State<SignupView> createState() => SignupViewState();
+}
+
+class SignupViewState extends State<SignupView> {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   SizedBox mySizedBox = const SizedBox(height: 20.0);
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void createAccount({required String email, required String password}) async {
+    try {
+      UserCredential userCredential = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      print(userCredential.toString());
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,74 +34,27 @@ class SignupView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AuthCustomTextField(
-                hintText: 'User Name',
-                isPasswordFieldl: false,
-              ),
-              // TextField(
-              //   decoration: InputDecoration(
-              //     hintText: 'User Name',
-              //     border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(20.0)),
-              //   ),
-              // ),
               mySizedBox,
               AuthCustomTextField(
+                controller: emailController,
                 hintText: 'Email',
                 isPasswordFieldl: false,
               ),
-              // TextField(
-              //   decoration: InputDecoration(
-              //     hintText: 'Email',
-              //     border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(20.0)),
-              //   ),
-              // ),
+              mySizedBox,
               mySizedBox,
               AuthCustomTextField(
-                hintText: 'Phone',
-                isPasswordFieldl: false,
-              ),
-              // TextField(
-              //   decoration: InputDecoration(
-              //     hintText: 'Phone',
-              //     border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(20.0)),
-              //   ),
-              // ),
-              mySizedBox,
-              AuthCustomTextField(
+                controller: passwordController,
                 hintText: 'Password',
                 isPasswordFieldl: true,
               ),
-              // TextField(
-              //   obscureText: true,
-              //   decoration: InputDecoration(
-              //     suffixIcon: const Icon(Icons.remove_red_eye),
-              //     hintText: 'Password',
-              //     border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(20.0)),
-              //   ),
-              // ),
               mySizedBox,
-              AuthCustomTextField(
-                hintText: 'Confirm password',
-                isPasswordFieldl: true,
-              ),
-              // TextField(
-              //   obscureText: true,
-              //   decoration: InputDecoration(
-              //     suffixIcon: const Icon(Icons.remove_red_eye),
-              //     hintText: 'Confirm password',
-              //     border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(20.0)),
-              //   ),
-              // ),
-              ElevatedButton(onPressed: () {}, child: const Text('Sign in'))
-              /*
-              
-              YouStarButton(onPress: (){}, child: ),
-              */
+              ElevatedButton(
+                  onPressed: () {
+                    createAccount(
+                        email: emailController.text,
+                        password: passwordController.text);
+                  },
+                  child: const Text('Sign up'))
             ],
           ),
         ),
@@ -93,17 +65,19 @@ class SignupView extends StatelessWidget {
 
 class AuthCustomTextField extends StatelessWidget {
   final String hintText;
-  // final Icon suffixIcon;
+  final TextEditingController controller;
+
   final bool isPasswordFieldl;
   const AuthCustomTextField(
       {super.key,
+      required this.controller,
       required this.hintText,
-      // required this.suffixIcon,
       required this.isPasswordFieldl});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         suffixIcon: isPasswordFieldl == true
             ? IconButton(onPressed: () {}, icon: Icon(Icons.remove_red_eye))
