@@ -1,24 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
+import 'package:sdrc_classes/ui/views/home/home_view.dart';
 
-class SignupView extends StatefulWidget {
-  const SignupView({super.key});
+class SigninView extends StatefulWidget {
+  const SigninView({super.key});
 
   @override
-  State<SignupView> createState() => SignupViewState();
+  State<SigninView> createState() => SigninViewState();
 }
 
-class SignupViewState extends State<SignupView> {
+class SigninViewState extends State<SigninView> {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   SizedBox mySizedBox = const SizedBox(height: 20.0);
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void createAccount({required String email, required String password}) async {
+  void loginUser({required String email, required String password}) async {
     try {
       UserCredential userCredential = await firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password);
       print(userCredential.toString());
     } catch (e) {
       print(e);
@@ -50,26 +50,20 @@ class SignupViewState extends State<SignupView> {
               mySizedBox,
               ElevatedButton(
                   onPressed: () {
-                    createAccount(
-                        email: emailController.text,
-                        password: passwordController.text);
+                    try {
+                      loginUser(
+                          email: emailController.text,
+                          password: passwordController.text);
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return HomeView();
+                        },
+                      ));
+                    } catch (e) {
+                      print('Failed to Login');
+                    }
                   },
-                  child: const Text('Sign up')),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Text('Dont\'t have an account?'),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return SigninView();
-                          },
-                        ));
-                      },
-                      child: const Text('signin')),
-                ],
-              )
+                  child: const Text('sign in'))
             ],
           ),
         ),
