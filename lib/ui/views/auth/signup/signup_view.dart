@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -28,6 +27,7 @@ class SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
@@ -58,14 +58,12 @@ class SignupViewState extends State<SignupView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Text('Dont\'t have an account?'),
+                  const Text('Already have an account?'),
                   TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return SigninView();
-                          },
-                        ));
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/login/', (route) => false);
+                        ;
                       },
                       child: const Text('signin')),
                 ],

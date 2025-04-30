@@ -28,6 +28,7 @@ class SigninViewState extends State<SigninView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
@@ -63,7 +64,19 @@ class SigninViewState extends State<SigninView> {
                       print('Failed to Login');
                     }
                   },
-                  child: const Text('sign in'))
+                  child: const Text('sign in')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text('Dont\'t have an account?'),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/signup/', (route) => false);
+                      },
+                      child: const Text('signup')),
+                ],
+              )
             ],
           ),
         ),

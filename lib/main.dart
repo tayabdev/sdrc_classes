@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
 import 'package:sdrc_classes/ui/views/auth/signup/signup_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view_model.dart';
@@ -28,26 +29,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        themeMode: ThemeMode.dark,
-        darkTheme: ThemeData.dark(),
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: CheckAuthStatus()
-
-        //  SignupView(),
-        );
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeData.dark(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const CheckAuthStatus(),
+      routes: {
+        '/login/': (context) => SigninView(),
+        '/signup/': (context) => SignupView(),
+        '/home/': (context) => HomeView()
+      },
+    );
   }
 }
 
-class CheckAuthStatus extends StatelessWidget {
-  CheckAuthStatus({super.key});
-  // Defined flag variable for user management operations
+class CheckAuthStatus extends StatefulWidget {
+  const CheckAuthStatus({super.key});
 
+  @override
+  State<CheckAuthStatus> createState() => _CheckAuthStatusState();
+}
+
+class _CheckAuthStatusState extends State<CheckAuthStatus> {
+  // Defined flag variable for user management operations
   bool isUserInTheApp = false;
+
   // method to verify if user exists in the phone
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 

@@ -4,10 +4,18 @@ import 'package:provider/provider.dart';
 import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view_model.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  HomeView({super.key});
+
   final String name = 'Ali';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
