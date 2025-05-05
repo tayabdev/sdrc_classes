@@ -73,7 +73,6 @@ class SignupViewState extends State<SignupView> {
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(
                             context, SigninView.routeName, (route) => false);
-                        ;
                       },
                       child: const Text('signin')),
                 ],
