@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
+import 'package:sdrc_classes/core/routes/route_generator.dart';
 import 'package:sdrc_classes/ui/views/auth/signup/signup_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view_model.dart';
@@ -37,12 +37,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CheckAuthStatus(),
-      routes: {
-        '/login/': (context) => SigninView(),
-        '/signup/': (context) => SignupView(),
-        '/home/': (context) => HomeView()
-      },
+      // home: const CheckAuthStatus(),
+      initialRoute: SignupView.routeName,
+      onGenerateRoute: (settings) => RouteGenerator.onGenerateRoute(settings),
+      // routes: {
+      //   '/login/': (context) => SigninView(),
+      //   '/signup/': (context) => SignupView(),
+      //   '/home/': (context) => HomeView()
+      // },
     );
   }
 }

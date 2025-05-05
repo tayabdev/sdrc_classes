@@ -1,8 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sdrc_classes/ui/views/auth/signup/signup_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view.dart';
 
 class SigninView extends StatefulWidget {
+  static const String routeName = "/signin-view/";
+  static Route route() {
+    return MaterialPageRoute(
+        builder: (context) {
+          return SigninView();
+        },
+        settings: RouteSettings(name: routeName));
+  }
+
   const SigninView({super.key});
 
   @override
@@ -72,7 +82,7 @@ class SigninViewState extends State<SigninView> {
                   TextButton(
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(
-                            context, '/signup/', (route) => false);
+                            context, SignupView.routeName, (route) => false);
                       },
                       child: const Text('signup')),
                 ],
