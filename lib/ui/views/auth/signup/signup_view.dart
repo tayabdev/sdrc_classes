@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
@@ -19,7 +20,11 @@ class SignupView extends StatefulWidget {
 }
 
 class SignupViewState extends State<SignupView> {
+  // Instances
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  // Variables
   SizedBox mySizedBox = const SizedBox(height: 20.0);
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -28,6 +33,7 @@ class SignupViewState extends State<SignupView> {
     try {
       UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
+
       print(userCredential.toString());
     } catch (e) {
       print(e);
@@ -60,6 +66,7 @@ class SignupViewState extends State<SignupView> {
               mySizedBox,
               ElevatedButton(
                   onPressed: () {
+                    print('Regsistering User.....');
                     createAccount(
                         email: emailController.text,
                         password: passwordController.text);

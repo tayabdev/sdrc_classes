@@ -22,7 +22,10 @@ class _HomeViewState extends State<HomeView> {
       body: Consumer<HomeViewModel>(
         builder: (context, homeViewModel, _) {
           return Center(
-              child: IconButton(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
                   onPressed: () {
                     print('Trying to logout.....');
                     try {
@@ -38,10 +41,33 @@ class _HomeViewState extends State<HomeView> {
                       print('Failed to Logout the user');
                     }
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.power_settings_new_outlined,
                     color: Colors.red,
-                  )));
+                    size: 80,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    print('Trying to Add hard coded data.....');
+                    homeViewModel.createUser();
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    size: 80.0,
+                    color: Colors.lightGreenAccent,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    print('Trying to Read hard coded data.....');
+                    homeViewModel.readData();
+                  },
+                  icon: const Icon(
+                    Icons.download,
+                    size: 80.0,
+                    color: Colors.lightGreenAccent,
+                  ))
+            ],
+          ));
         },
       ),
     );

@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: const CheckAuthStatus(),
-      initialRoute: SignupView.routeName,
+      home: const CheckAuthStatus(),
+      // initialRoute: SignupView.routeName,
       onGenerateRoute: (settings) => RouteGenerator.onGenerateRoute(settings),
       // routes: {
       //   '/login/': (context) => SigninView(),
