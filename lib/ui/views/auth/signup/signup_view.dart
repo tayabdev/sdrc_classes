@@ -34,7 +34,17 @@ class SignupViewState extends State<SignupView> {
       UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      print(userCredential.toString());
+      if (userCredential.user != null) {
+        firebaseFirestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'name': 'Imran Khan',
+          'email': 'imrankhan@gmail.com',
+          'age': 76,
+        });
+      }
+      print(userCredential.user!.uid);
     } catch (e) {
       print(e);
     }
