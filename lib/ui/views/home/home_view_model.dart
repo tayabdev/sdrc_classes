@@ -28,6 +28,20 @@ class HomeViewModel extends ChangeNotifier {
     // print(documentSnapshot.data());
   }
 
+  Future<void> updateUserData() async {
+    firebaseFirestore
+        .collection('users')
+        .doc('ZqL8rNJpTTQdhgUgteMQ4AWZkA72')
+        .update({'age': 88});
+  }
+
+  Future<void> deleteUserData() async {
+    firebaseFirestore
+        .collection('users')
+        .doc('ZqL8rNJpTTQdhgUgteMQ4AWZkA72')
+        .delete();
+  }
+
 //========================//
   // Variable
   bool isRememberMe = true;

@@ -44,6 +44,10 @@ class SignupViewState extends State<SignupView> {
           'age': 76,
         });
       }
+      firebaseFirestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .update({'userId': userCredential.user!.uid.toString()});
       print(userCredential.user!.uid);
     } catch (e) {
       print(e);

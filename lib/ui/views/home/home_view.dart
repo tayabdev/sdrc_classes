@@ -65,6 +65,26 @@ class _HomeViewState extends State<HomeView> {
                     Icons.download,
                     size: 80.0,
                     color: Colors.lightGreenAccent,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    print('Trying to update hard coded data.....');
+                    homeViewModel.updateUserData();
+                  },
+                  icon: const Icon(
+                    Icons.security_update_good_rounded,
+                    size: 80.0,
+                    color: Colors.lightBlue,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    print('Trying to delete hard coded data.....');
+                    homeViewModel.deleteUserData();
+                  },
+                  icon: const Icon(
+                    Icons.close,
+                    size: 80.0,
+                    color: Colors.red,
                   ))
             ],
           ));
