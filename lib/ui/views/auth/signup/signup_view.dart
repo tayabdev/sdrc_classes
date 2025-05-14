@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
+import 'package:sdrc_classes/ui/views/auth/signup/signup_view_model.dart';
 
 class SignupView extends StatefulWidget {
   static const String routeName = "/signup-view/";
@@ -29,78 +31,56 @@ class SignupViewState extends State<SignupView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void createAccount({required String email, required String password}) async {
-    try {
-      UserCredential userCredential = await firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-
-      if (userCredential.user != null) {
-        firebaseFirestore
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .set({
-          'name': 'Imran Khan',
-          'email': 'imrankhan@gmail.com',
-          'age': 76,
-        });
-      }
-      firebaseFirestore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .update({'userId': userCredential.user!.uid.toString()});
-      print(userCredential.user!.uid);
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              mySizedBox,
-              AuthCustomTextField(
-                controller: emailController,
-                hintText: 'Email',
-                isPasswordFieldl: false,
-              ),
-              mySizedBox,
-              mySizedBox,
-              AuthCustomTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                isPasswordFieldl: true,
-              ),
-              mySizedBox,
-              ElevatedButton(
-                  onPressed: () {
-                    print('Regsistering User.....');
-                    createAccount(
-                        email: emailController.text,
-                        password: passwordController.text);
-                  },
-                  child: const Text('Sign up')),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+      body: Consumer<SignupViewModel>(
+        builder: (context, viewModel, child) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Already have an account?'),
-                  TextButton(
+                  mySizedBox,
+                  AuthCustomTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    isPasswordFieldl: false,
+                  ),
+                  mySizedBox,
+                  mySizedBox,
+                  AuthCustomTextField(
+                    controller: passwordController,
+                    hintText: 'Password',
+                    isPasswordFieldl: true,
+                  ),
+                  mySizedBox,
+                  ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, SigninView.routeName, (route) => false);
+                        print('Regsistering User.....');
+                        viewModel.createUser(
+                            emailController.text, passwordController.text);
                       },
-                      child: const Text('signin')),
+                      child: const Text('Sign up')),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text('Already have an account?'),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                SigninView.routeName, (route) => false);
+                          },
+                          child: const Text('signin')),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

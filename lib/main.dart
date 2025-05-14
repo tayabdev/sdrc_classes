@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sdrc_classes/core/routes/route_generator.dart';
 import 'package:sdrc_classes/ui/views/auth/signup/signup_view.dart';
+import 'package:sdrc_classes/ui/views/auth/signup/signup_view_model.dart';
 import 'package:sdrc_classes/ui/views/home/home_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view_model.dart';
 import 'firebase_options.dart';
@@ -18,6 +19,9 @@ void main() async {
       ChangeNotifierProvider(
         create: (context) => HomeViewModel(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => SignupViewModel(),
+      )
     ],
     child: const MyApp(),
   ));
