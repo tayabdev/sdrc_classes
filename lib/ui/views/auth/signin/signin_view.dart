@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sdrc_classes/core/utils/auth_utils.dart';
+import 'package:sdrc_classes/ui/views/auth/signin/signin_view_model.dart';
 import 'package:sdrc_classes/ui/views/auth/signup/signup_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view.dart';
 
@@ -25,71 +28,71 @@ class SigninViewState extends State<SigninView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void loginUser({required String email, required String password}) async {
-    try {
-      UserCredential userCredential = await firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
-      print(userCredential.toString());
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              mySizedBox,
-              AuthCustomTextField(
-                controller: emailController,
-                hintText: 'Email',
-                isPasswordFieldl: false,
-              ),
-              mySizedBox,
-              mySizedBox,
-              AuthCustomTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                isPasswordFieldl: true,
-              ),
-              mySizedBox,
-              ElevatedButton(
-                  onPressed: () {
-                    try {
-                      loginUser(
-                          email: emailController.text,
-                          password: passwordController.text);
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return HomeView();
-                        },
-                      ));
-                    } catch (e) {
-                      print('Failed to Login');
-                    }
-                  },
-                  child: const Text('sign in')),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+      body: Consumer<SigninViewModel>(
+        builder: (context, viewModel, child) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Dont\'t have an account?'),
-                  TextButton(
+                  const Text('Sign in View', style: TextStyle(fontSize: 30.0)),
+                  mySizedBox,
+                  AuthCustomTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    isPasswordFieldl: false,
+                  ),
+                  mySizedBox,
+                  mySizedBox,
+                  AuthCustomTextField(
+                    controller: passwordController,
+                    hintText: 'Password',
+                    isPasswordFieldl: true,
+                  ),
+                  mySizedBox,
+                  ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, SignupView.routeName, (route) => false);
+                        try {
+                          viewModel.loginUser(
+                              emailController.text, passwordController.text);
+
+                          if (AuthUtils.getCurrentUserId() != null) {
+                            print(AuthUtils.getCurrentUserId());
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return HomeView();
+                              },
+                            ));
+                          } else {
+                            print('---------User not found---------');
+                          }
+                        } catch (e) {
+                          print('Failed to Login');
+                        }
                       },
-                      child: const Text('signup')),
+                      child: const Text('sign in')),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text('Dont\'t have an account?'),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                SignupView.routeName, (route) => false);
+                          },
+                          child: const Text('signup')),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
