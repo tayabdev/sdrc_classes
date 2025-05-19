@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
                     print('Trying to logout.....');
                     try {
                       if (firebaseAuth.currentUser != null) {
-                        firebaseAuth.signOut();
+                        homeViewModel.signOut(context);
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
                             return SigninView();

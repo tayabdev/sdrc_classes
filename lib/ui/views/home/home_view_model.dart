@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sdrc_classes/core/service/auth/auth_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  AuthService authService = AuthService();
 
   Future<void> createUser() async {
     // Define some definate name
@@ -52,5 +54,23 @@ class HomeViewModel extends ChangeNotifier {
     isRememberMe = !isRememberMe;
     // Notifies Listeners
     notifyListeners();
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    try {
+      await authService.signOut();
+    } catch (e) {
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Signout Failed'),
+              content: Text('Signout failed due to $e'),
+            );
+          },
+        );
+      }
+    }
   }
 }

@@ -58,8 +58,8 @@ class SigninViewState extends State<SigninView> {
                   ElevatedButton(
                       onPressed: () {
                         try {
-                          viewModel.loginUser(
-                              emailController.text, passwordController.text);
+                          viewModel.loginUser(emailController.text,
+                              passwordController.text, context);
 
                           if (AuthUtils.getCurrentUserId() != null) {
                             print(AuthUtils.getCurrentUserId());
