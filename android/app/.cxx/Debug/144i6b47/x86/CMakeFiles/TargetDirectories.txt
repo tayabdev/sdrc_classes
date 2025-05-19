@@ -1,0 +1,2 @@
+/Users/TAYAB/Desktop/sdrc_classes/android/app/.cxx/Debug/144i6b47/x86/CMakeFiles/edit_cache.dir
+/Users/TAYAB/Desktop/sdrc_classes/android/app/.cxx/Debug/144i6b47/x86/CMakeFiles/rebuild_cache.dir

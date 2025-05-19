@@ -56,9 +56,9 @@ class SigninViewState extends State<SigninView> {
                   ),
                   mySizedBox,
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         try {
-                          viewModel.loginUser(emailController.text,
+                          await viewModel.loginUser(emailController.text,
                               passwordController.text, context);
 
                           if (AuthUtils.getCurrentUserId() != null) {

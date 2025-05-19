@@ -6,7 +6,7 @@ class AuthService {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   Future<void> createUser(String email, String password) async {
-    firebaseAuth.createUserWithEmailAndPassword(
+    await firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     // try {
 
@@ -16,11 +16,8 @@ class AuthService {
   }
 
   Future<void> lginUser(String email, String password) async {
-    try {
-      firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
-      print('An error has occured $e');
-    }
+    await firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
   }
 
 // Signout user
