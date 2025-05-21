@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sdrc_classes/ui/views/auth/signin/signin_view.dart';
 import 'package:sdrc_classes/ui/views/home/home_view_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -20,74 +19,43 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<HomeViewModel>(
-        builder: (context, homeViewModel, _) {
+        builder: (context, viewModel, child) {
           return Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    print('Trying to logout.....');
-                    try {
-                      if (firebaseAuth.currentUser != null) {
-                        homeViewModel.signOut(context);
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return SigninView();
-                          },
-                        ));
-                      }
-                    } catch (e) {
-                      print('Failed to Logout the user');
-                    }
-                  },
-                  icon: Icon(
-                    Icons.power_settings_new_outlined,
-                    color: Colors.red,
-                    size: 80,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    print('Trying to Add hard coded data.....');
-                    homeViewModel.createUser();
-                  },
-                  icon: const Icon(
-                    Icons.add,
-                    size: 80.0,
-                    color: Colors.lightGreenAccent,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    print('Trying to Read hard coded data.....');
-                    homeViewModel.readData();
-                  },
-                  icon: const Icon(
-                    Icons.download,
-                    size: 80.0,
-                    color: Colors.lightGreenAccent,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    print('Trying to update hard coded data.....');
-                    homeViewModel.updateUserData();
-                  },
-                  icon: const Icon(
-                    Icons.security_update_good_rounded,
-                    size: 80.0,
-                    color: Colors.lightBlue,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    print('Trying to delete hard coded data.....');
-                    homeViewModel.deleteUserData();
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                    size: 80.0,
-                    color: Colors.red,
-                  ))
-            ],
-          ));
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                viewModel.isLoading == true
+                    ? const CircularProgressIndicator()
+                    : IconButton(
+                        onPressed: () {
+                          viewModel.createNote();
+                        },
+                        icon: const Icon(
+                          Icons.note_add_sharp,
+                          size: 50.0,
+                        )),
+                viewModel.isLoading == true
+                    ? const CircularProgressIndicator()
+                    : IconButton(
+                        onPressed: () {
+                          viewModel.deleteNote();
+                        },
+                        icon: const Icon(
+                          Icons.delete_forever_outlined,
+                          color: Colors.red,
+                          size: 50.0,
+                        )),
+                IconButton(
+                    onPressed: () {
+                      viewModel.readNotes();
+                    },
+                    icon: const Icon(
+                      Icons.book_rounded,
+                      size: 50.0,
+                    ))
+              ],
+            ),
+          );
         },
       ),
     );

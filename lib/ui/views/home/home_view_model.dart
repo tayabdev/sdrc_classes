@@ -1,76 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sdrc_classes/core/service/auth/auth_service.dart';
+import 'package:sdrc_classes/core/service/notes_service/notes_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   AuthService authService = AuthService();
+  NotesService notesService = NotesService();
+  bool isLoading = false;
 
-  Future<void> createUser() async {
-    // Define some definate name
-    await firebaseFirestore.collection('users').doc('user_456').set(
-      {'name': 'user_456_name', 'age': 100},
-    );
+// Create Notes
+  Future<void> createNote() async {
+    isLoading = true;
+    notifyListeners();
+    // Future.delayed(const Duration(seconds: 3));
 
-    // Add a random id to the document
-    // await firebaseFirestore.collection('users').add({
-    //   'name': 'Tayab',
-    //   'age': 23,
-    // });
-  }
-
-  Future<void> readData() async {
-    QuerySnapshot querySnapshot =
-        await firebaseFirestore.collection('users').get();
-
-    for (var element in querySnapshot.docs) {
-      print(element.data());
-    }
-
-    // print(documentSnapshot.data());
-  }
-
-  Future<void> updateUserData() async {
-    firebaseFirestore
-        .collection('users')
-        .doc('ZqL8rNJpTTQdhgUgteMQ4AWZkA72')
-        .update({'age': 88});
-  }
-
-  Future<void> deleteUserData() async {
-    firebaseFirestore
-        .collection('users')
-        .doc('ZqL8rNJpTTQdhgUgteMQ4AWZkA72')
-        .delete();
-  }
-
-//========================//
-  // Variable
-  bool isRememberMe = true;
-
-// Function to Toggle the Remember Me Tick Icon
-  void toggleRememberMe() {
-    // Toggleing Logic
-    isRememberMe = !isRememberMe;
-    // Notifies Listeners
+    await notesService.createNote();
+    isLoading = false;
     notifyListeners();
   }
 
-  Future<void> signOut(BuildContext context) async {
-    try {
-      await authService.signOut();
-    } catch (e) {
-      if (context.mounted) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Signout Failed'),
-              content: Text('Signout failed due to $e'),
-            );
-          },
-        );
-      }
-    }
+// Delete Notes
+  Future<void> deleteNote() async {
+    isLoading = true;
+    notifyListeners();
+    await notesService.deleteNote();
+    isLoading = false;
+    notifyListeners();
+  }
+
+// Read Notes
+
+  Future<void> readNotes() async {
+    await notesService.readNotes();
   }
 }
