@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sdrc_classes/json_parsing/test_model.dart';
 
 String jsonData = '''
 
@@ -69,6 +70,7 @@ class _ShowUsersDataState extends State<ShowUsersData> {
     final parsedResponse = jsonDecode(jsonData);
     List<dynamic> userList = parsedResponse['user'];
     myUsers = userList.map((json) => User.fromJson(json)).toList();
+    testFunction();
     super.initState();
   }
 
