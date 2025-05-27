@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 String jsonData = '''
 
               {
@@ -50,5 +52,41 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {id: 'id', name: 'name', email: 'email'};
+  }
+}
+
+class ShowUsersData extends StatefulWidget {
+  const ShowUsersData({super.key});
+
+  @override
+  State<ShowUsersData> createState() => _ShowUsersDataState();
+}
+
+class _ShowUsersDataState extends State<ShowUsersData> {
+  late List<User> myUsers;
+  @override
+  void initState() {
+    final parsedResponse = jsonDecode(jsonData);
+    List<dynamic> userList = parsedResponse['user'];
+    myUsers = userList.map((json) => User.fromJson(json)).toList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: ListView.builder(
+        itemCount: myUsers.length,
+        itemBuilder: (context, index) {
+          final user = myUsers[index];
+          return ListTile(
+            leading: Text(user.id),
+            title: Text(user.name),
+            subtitle: Text(user.email),
+          );
+        },
+      ),
+    );
   }
 }
