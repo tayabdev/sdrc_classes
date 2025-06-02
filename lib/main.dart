@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sdrc_classes/core/routes/route_generator.dart';
-import 'package:sdrc_classes/json_parsing/practice.dart';
+import 'package:sdrc_classes/ui/views/add_data/add_data_view_model.dart';
 import 'package:sdrc_classes/ui/views/auth/signin/signin_view_model.dart';
 import 'package:sdrc_classes/ui/views/auth/signup/signup_view.dart';
 import 'package:sdrc_classes/ui/views/auth/signup/signup_view_model.dart';
@@ -24,7 +24,10 @@ void main() async {
       ChangeNotifierProvider(
         create: (context) => SignupViewModel(),
       ),
-      ChangeNotifierProvider(create: (context) => SigninViewModel())
+      ChangeNotifierProvider(create: (context) => SigninViewModel()),
+      ChangeNotifierProvider(
+        create: (context) => AddDataViewModel(),
+      )
     ],
     child: const MyApp(),
   ));
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ShowUsersData(),
+      home: HomeView(),
       // initialRoute: SignupView.routeName,
       onGenerateRoute: (settings) => RouteGenerator.onGenerateRoute(settings),
       // routes: {
